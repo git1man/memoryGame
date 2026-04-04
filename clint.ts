@@ -2,7 +2,6 @@ import { IPrepare } from "./model/prepare";
 import { ICard } from "./model/card";
 
 const prepare: IPrepare = {};
-
 prepare.cards = [];
 prepare.progress = 0;
 prepare.fullTrack = new Audio('./assets/audio/fulltrack.mp3');
@@ -13,11 +12,11 @@ prepare.gameOverAudio = new Audio('./assets/audio/game-over.mp3');
 prepare.fullTrack.loop = true;
 
 const numberOfCards = 20;
-const tempNumbers: string[] = [];
+const tempNumbers= [];
 let cardsHtmlContent = '';
 
-const getRandomInt = (min: number, max: number): number => {
-    let result!: number;
+const getRandomInt = (min, max) => {
+    let result: number;
     let exists = true;
     min = Math.ceil(min);
     max = Math.floor(max);
