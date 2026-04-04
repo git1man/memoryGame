@@ -1,8 +1,8 @@
 body {
   background-image: url(./assets/brain.jpg);
+  background-size: 30% auto;
   background-position: center;
   color: white;
-  background-size: 30% auto;
   height: 100vh;
 
 }
@@ -12,11 +12,11 @@ html{
 
 #content {
   text-align: center;
-  margin: 3%;
+  margin: 5%;
   padding: 10px;
   background-color: white;
   text-shadow: 0px 4px 3px blue, 0px 8px 13px blue,0 18px 23px blue;
-  opacity: 0.75;
+  opacity: 0.9;
   color:blue;
 }
 .row{
@@ -44,7 +44,7 @@ html{
   perspective: 1000px;
 }
 .flip{
-  transform: rotateY(100deg);
+  transform: rotateY(180deg);
 }
 
 .caerd-flip, .front,.back{
@@ -53,7 +53,7 @@ html{
  border:red 1px dashed;
 }
 .flip{
-  transition: 0.4s linear;
+  transition: 0.1s linear;
   transform-style:preserve-3d ;
   position: relative;
 }

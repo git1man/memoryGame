@@ -2,6 +2,7 @@ import { IPrepare } from "./model/prepare";
 import { ICard } from "./model/card";
 
 const prepare: IPrepare = {};
+
 prepare.cards = [];
 prepare.progress = 0;
 prepare.fullTrack = new Audio('./assets/audio/fulltrack.mp3');
@@ -12,10 +13,10 @@ prepare.gameOverAudio = new Audio('./assets/audio/game-over.mp3');
 prepare.fullTrack.loop = true;
 
 const numberOfCards = 20;
-const tempNumbers= [];
+const tempNumbers: string[] = [];
 let cardsHtmlContent = '';
 
-const getRandomInt = (min, max) => {
+const getRandomInt = (min, max ) => {
     let result: number;
     let exists = true;
     min = Math.ceil(min);
@@ -30,26 +31,24 @@ const getRandomInt = (min, max) => {
     return result;
 };
 
-(window as any).toggleFlip = (index: number): void => {
-    prepare.fullTrack?.play();
-    const card = prepare.cards![index];
-    if (card.flip === '' && card.clickable) {
+const toggleFlip = (index) => {
+    prepare.fullTrack.play();
+    const card = prepare.cards[index];
+    if (!card.flip && card.clickable) {
         flip(card, index);
         selectedCard(card, index); 
     }
 };
 
-const flip = (card: ICard, index: number): void => {
+const flip = (card: ICard, index: number) => {
     prepare.flipAudia?.play(); 
     if (card) {
-        
-        card.flip = card.flip === '' ? 'flipped' : '';
-        const el = document.getElementById(`card-flip-${index}`);
-        if (el) el.className = card.flip; 
+        card.flip = card.flip === '' ? 'flip' : '';
+        document.getElementById(`card-flip-${index}`).classList.value=card.flip;
     }
 };
 
-const selectedCard = (card: ICard, index: number): void => {
+const selectedCard = (card: ICard, index: number) => {
     if (!prepare.selectedCars_1) {
         prepare.selectedCars_1 = card;
         prepare.selectedIndex_1 = index;
@@ -64,44 +63,45 @@ const selectedCard = (card: ICard, index: number): void => {
             prepare.selectedCars_2.clickable = false;
             prepare.selectedCars_1 = null;
             prepare.selectedCars_2 = null;
-            stopAudio(prepare.failAudio!);
-            stopAudio(prepare.goodAudio!);
-            prepare.goodAudio?.play();
+            stopAudio(prepare.failAudio);
+            stopAudio(prepare.goodAudio);
+            prepare.goodAudio.play();
             changeProgress(); 
             checkFinish();    
         } else {
             setTimeout(() => {
-                stopAudio(prepare.failAudio!);
-                stopAudio(prepare.goodAudio!);
-                prepare.failAudio?.play();
-                flip(prepare.selectedCars_1!, prepare.selectedIndex_1!);
-                flip(prepare.selectedCars_2!, prepare.selectedIndex_2!);
+                stopAudio(prepare.failAudio);
+                stopAudio(prepare.goodAudio);
+                prepare.failAudio.play();
+                flip(prepare.selectedCars_1, prepare.selectedIndex_1);
+                flip(prepare.selectedCars_2, prepare.selectedIndex_2);
                 prepare.selectedCars_1 = null;
                 prepare.selectedCars_2 = null;
-            }, 1000);
+            }, 500);
         }
     }
 };
 
-const changeProgress = (): void => {
-    const progress = prepare.cards!.filter(card => !card.clickable).length / numberOfCards * 100;
-    const progressElement = document.getElementById('progress') as HTMLElement;
+const changeProgress = () => {
+    const progress = prepare.cards.filter(card => !card.clickable).length / numberOfCards * 100;
+    const progressElement = document.getElementById('progress');
     progressElement.style.width = `${progress}%`;
     progressElement.innerText = `${progress}%`;
 };
 
-const checkFinish = (): void => { 
-    if (prepare.cards!.filter(card => !card.clickable).length === numberOfCards) {
-        stopAudio(prepare.fullTrack!);
-        stopAudio(prepare.failAudio!);
-        stopAudio(prepare.goodAudio!);
+const checkFinish = () => { 
+    if (prepare.cards.filter(card => !card.clickable).length === numberOfCards) {
+        stopAudio(prepare.fullTrack);
+        stopAudio(prepare.failAudio);
+        stopAudio(prepare.goodAudio);
         prepare.gameOverAudio?.play();
     }
 };
 
-const stopAudio = (audio: HTMLAudioElement): void => {
-    if (audio && audio.played.length > 0) { 
-        audio.currentTime = 0;
+const stopAudio = (audio: HTMLAudioElement) => {
+    if (audio && audio.played) { 
+        audio.pause();
+        audio.currentTime=0;
     }
 };
 
@@ -126,7 +126,8 @@ prepare.cards.sort((a, b) => a.id > b.id ? 1 : -1);
 
 prepare.cards.forEach((item, index) => {
     cardsHtmlContent += `
-        <div class="col-sm-3 col-lg-2">
+        <span class="col-sm-3 col-lg-2">
+        
             <div onclick="toggleFlip(${index})" class="card-flip">
                 <div id="card-flip-${index}">
                     <div class="front">
@@ -137,13 +138,13 @@ prepare.cards.forEach((item, index) => {
                     </div>
                     <div class="back">
                         <div class="card">
-                            <img src="./assets/images/${item.index}.jpg" alt="Image [100%x180]" data-holder-rendered=true style="height:120px;width:100%;display:block;">
+                            <img src="./assets/images/${item.index}.jpg" data-holder-rendered=false style="height:120px;width:100%;display:block;">
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </span>
     `;
 });
 
-document.getElementById('cards')!.innerHTML = cardsHtmlContent;
+document.getElementById('cards').innerHTML = cardsHtmlContent;

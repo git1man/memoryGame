@@ -24,10 +24,10 @@ const getRandomInt = (min, max) => {
     }
     return result;
 };
-window.toggleFlip = (index) => {
-    prepare.fullTrack?.play();
+const toggleFlip = (index) => {
+    prepare.fullTrack.play();
     const card = prepare.cards[index];
-    if (card.flip === '' && card.clickable) {
+    if (!card.flip && card.clickable) {
         flip(card, index);
         selectedCard(card, index);
     }
@@ -35,10 +35,8 @@ window.toggleFlip = (index) => {
 const flip = (card, index) => {
     prepare.flipAudia?.play();
     if (card) {
-        card.flip = card.flip === '' ? 'flipped' : '';
-        const el = document.getElementById(`card-flip-${index}`);
-        if (el)
-            el.className = card.flip;
+        card.flip = card.flip === '' ? 'flip' : '';
+        document.getElementById(`card-flip-${index}`).classList.value = card.flip;
     }
 };
 const selectedCard = (card, index) => {
@@ -58,7 +56,7 @@ const selectedCard = (card, index) => {
             prepare.selectedCars_2 = null;
             stopAudio(prepare.failAudio);
             stopAudio(prepare.goodAudio);
-            prepare.goodAudio?.play();
+            prepare.goodAudio.play();
             changeProgress();
             checkFinish();
         }
@@ -66,12 +64,12 @@ const selectedCard = (card, index) => {
             setTimeout(() => {
                 stopAudio(prepare.failAudio);
                 stopAudio(prepare.goodAudio);
-                prepare.failAudio?.play();
+                prepare.failAudio.play();
                 flip(prepare.selectedCars_1, prepare.selectedIndex_1);
                 flip(prepare.selectedCars_2, prepare.selectedIndex_2);
                 prepare.selectedCars_1 = null;
                 prepare.selectedCars_2 = null;
-            }, 1000);
+            }, 500);
         }
     }
 };
@@ -90,7 +88,8 @@ const checkFinish = () => {
     }
 };
 const stopAudio = (audio) => {
-    if (audio && audio.played.length > 0) {
+    if (audio && audio.played) {
+        audio.pause();
         audio.currentTime = 0;
     }
 };
@@ -113,7 +112,8 @@ for (let index = 0; index < numberOfCards / 2; index++) {
 prepare.cards.sort((a, b) => a.id > b.id ? 1 : -1);
 prepare.cards.forEach((item, index) => {
     cardsHtmlContent += `
-        <div class="col-sm-3 col-lg-2">
+        <span class="col-sm-3 col-lg-2">
+        
             <div onclick="toggleFlip(${index})" class="card-flip">
                 <div id="card-flip-${index}">
                     <div class="front">
@@ -124,12 +124,12 @@ prepare.cards.forEach((item, index) => {
                     </div>
                     <div class="back">
                         <div class="card">
-                            <img src="./assets/images/${item.index}.jpg" alt="Image [100%x180]" data-holder-rendered=true style="height:120px;width:100%;display:block;">
+                            <img src="./assets/images/${item.index}.jpg" data-holder-rendered=false style="height:120px;width:100%;display:block;">
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </span>
     `;
 });
 document.getElementById('cards').innerHTML = cardsHtmlContent;
