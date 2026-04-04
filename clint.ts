@@ -35,7 +35,7 @@ const getRandomInt = (min, max) => {
     const card = prepare.cards![index];
     if (card.flip === '' && card.clickable) {
         flip(card, index);
-        selectedCard(card, index); // FIX: was never called
+        selectedCard(card, index); 
     }
 };
 

@@ -29,7 +29,7 @@ window.toggleFlip = (index) => {
     const card = prepare.cards[index];
     if (card.flip === '' && card.clickable) {
         flip(card, index);
-        selectedCard(card, index); 
+        selectedCard(card, index);
     }
 };
 const flip = (card, index) => {
