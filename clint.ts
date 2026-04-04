@@ -1,7 +1,6 @@
 import { IPrepare } from "./model/prepare";
 import { ICard } from "./model/card";
 
-// FIX: initialize with required nullable fields
 const prepare: IPrepare = {};
 
 prepare.cards = [];

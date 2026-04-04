@@ -1,4 +1,3 @@
-// FIX: initialize with required nullable fields
 const prepare = {};
 prepare.cards = [];
 prepare.progress = 0;
@@ -30,7 +29,7 @@ window.toggleFlip = (index) => {
     const card = prepare.cards[index];
     if (card.flip === '' && card.clickable) {
         flip(card, index);
-        selectedCard(card, index); // FIX: was never called
+        selectedCard(card, index); 
     }
 };
 const flip = (card, index) => {
