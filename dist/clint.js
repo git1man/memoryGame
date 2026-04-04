@@ -1,4 +1,3 @@
-// FIX: initialize with required nullable fields
 const prepare = {
     selectedCars_1: null,
     selectedCars_2: null,
@@ -34,21 +33,19 @@ const toggleFlip = (index) => {
     const card = prepare.cards[index];
     if (card.flip === '' && card.clickable) {
         flip(card, index);
-        selectedCard(card, index); // FIX: was never called
+        selectedCard(card, index); 
     }
 };
 const flip = (card, index) => {
     var _a;
-    (_a = prepare.flipAudia) === null || _a === void 0 ? void 0 : _a.play(); // FIX: added optional chaining
+    (_a = prepare.flipAudia) === null || _a === void 0 ? void 0 : _a.play(); 
     if (card) {
-        // FIX: was always assigning '' to both sides — now actually toggles
         card.flip = card.flip === '' ? 'flipped' : '';
         const el = document.getElementById(`card-flip-${index}`);
         if (el)
-            el.className = card.flip; // FIX: classList.value → className, added null check
+            el.className = card.flip; 
     }
 };
-// FIX: was missing => (syntax error); also first condition was wrong (!prepare.selectedCars_1, not prepare.selectedCars_1)
 const selectedCard = (card, index) => {
     var _a;
     if (!prepare.selectedCars_1) {
@@ -68,8 +65,8 @@ const selectedCard = (card, index) => {
             stopAudio(prepare.failAudio);
             stopAudio(prepare.goodAudio);
             (_a = prepare.goodAudio) === null || _a === void 0 ? void 0 : _a.play();
-            changeProgress(); // FIX: typo was changePrgress()
-            checkFinish(); // FIX: typo was checkFinsh()
+            changeProgress(); 
+            checkFinish(); 
         }
         else {
             setTimeout(() => {
@@ -101,7 +98,7 @@ const checkFinish = () => {
     }
 };
 const stopAudio = (audio) => {
-    if (audio && audio.played.length > 0) { // FIX: audio.played is a TimeRanges object, need .length > 0
+    if (audio && audio.played.length > 0) { 
         audio.pause();
         audio.currentTime = 0;
     }
@@ -123,7 +120,6 @@ for (let index = 0; index < numberOfCards / 2; index++) {
     });
 }
 prepare.cards.sort((a, b) => a.id > b.id ? 1 : -1);
-// FIX: was missing parentheses — forEach(item,index) => { should be forEach((item, index) => {
 prepare.cards.forEach((item, index) => {
     cardsHtmlContent += `
         <span class="col-sm-3 col-lg-2">
