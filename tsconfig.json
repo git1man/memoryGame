@@ -1,0 +1,10 @@
+{
+    "compilerOptions": {
+        "module": "ES6",
+        "target": "ES6",
+        "outDir": "dist",
+        "strict": false,
+        "lib": ["ES6", "DOM"]
+    },
+    "include": ["clint.ts", "model/**/*.ts"]
+}
