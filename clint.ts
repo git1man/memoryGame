@@ -1,7 +1,7 @@
 import { IPrepare } from "./model/prepare";
 import { ICard } from "./model/card";
 
-const prepare: IPrepare = {};
+const prepare: IPrepare = {} as IPrepare;
 
 prepare.cards = [];
 prepare.progress = 0;
@@ -138,7 +138,7 @@ prepare.cards.forEach((item, index) => {
                     </div>
                     <div class="back">
                         <div class="card">
-                            <img src="./assets/images/${item.index}.jpg" data-holder-rendered=false style="height:120px;width:100%;display:block;">
+                            <img src="./assets/images/${item.index}.jpg" data-holder-rendered=true style="height:120px;width:100%;display:inline;">
                         </div>
                     </div>
                 </div>

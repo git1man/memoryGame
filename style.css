@@ -40,14 +40,16 @@ html{
   font-size: 85px;
   color: white;
 }
-.card-flip{
-  perspective: 1000px;
-}
+ .card-flip{
+   perspective: 1000px; 
+   position: relative;
+ } 
 .flip{
   transform: rotateY(180deg);
 }
 
-.caerd-flip, .front,.back{
+
+.card-flip, .front,.back{
  width: 100%;
  height: 130px;
  border:red 1px dashed;
@@ -59,7 +61,7 @@ html{
 }
 .front,.back{
   backface-visibility: hidden;  
-  position: relative;
+  position: absolute;
   top: 0;
   left: 0;
 }
@@ -77,6 +79,6 @@ html{
 .progress{
   margin-bottom:10px ;
   height: 35px;
-  display: flex;
   justify-content: center;
+  display: flex;
 }

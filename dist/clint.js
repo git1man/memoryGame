@@ -1,7 +1,4 @@
-const prepare = {
-    selectedCars_1: null,
-    selectedCars_2: null,
-};
+const prepare = {};
 prepare.cards = [];
 prepare.progress = 0;
 prepare.fullTrack = new Audio('./assets/audio/fulltrack.mp3');
@@ -28,26 +25,22 @@ const getRandomInt = (min, max) => {
     return result;
 };
 const toggleFlip = (index) => {
-    var _a;
-    (_a = prepare.fullTrack) === null || _a === void 0 ? void 0 : _a.play();
+    prepare.fullTrack.play();
     const card = prepare.cards[index];
-    if (card.flip === '' && card.clickable) {
+    if (!card.flip && card.clickable) {
         flip(card, index);
-        selectedCard(card, index); 
+        selectedCard(card, index);
     }
 };
 const flip = (card, index) => {
     var _a;
-    (_a = prepare.flipAudia) === null || _a === void 0 ? void 0 : _a.play(); 
+    (_a = prepare.flipAudia) === null || _a === void 0 ? void 0 : _a.play();
     if (card) {
-        card.flip = card.flip === '' ? 'flipped' : '';
-        const el = document.getElementById(`card-flip-${index}`);
-        if (el)
-            el.className = card.flip; 
+        card.flip = card.flip === '' ? 'flip' : '';
+        document.getElementById(`card-flip-${index}`).classList.value = card.flip;
     }
 };
 const selectedCard = (card, index) => {
-    var _a;
     if (!prepare.selectedCars_1) {
         prepare.selectedCars_1 = card;
         prepare.selectedIndex_1 = index;
@@ -64,21 +57,20 @@ const selectedCard = (card, index) => {
             prepare.selectedCars_2 = null;
             stopAudio(prepare.failAudio);
             stopAudio(prepare.goodAudio);
-            (_a = prepare.goodAudio) === null || _a === void 0 ? void 0 : _a.play();
-            changeProgress(); 
-            checkFinish(); 
+            prepare.goodAudio.play();
+            changeProgress();
+            checkFinish();
         }
         else {
             setTimeout(() => {
-                var _a;
                 stopAudio(prepare.failAudio);
                 stopAudio(prepare.goodAudio);
-                (_a = prepare.failAudio) === null || _a === void 0 ? void 0 : _a.play();
+                prepare.failAudio.play();
                 flip(prepare.selectedCars_1, prepare.selectedIndex_1);
                 flip(prepare.selectedCars_2, prepare.selectedIndex_2);
                 prepare.selectedCars_1 = null;
                 prepare.selectedCars_2 = null;
-            }, 1000);
+            }, 500);
         }
     }
 };
@@ -98,7 +90,7 @@ const checkFinish = () => {
     }
 };
 const stopAudio = (audio) => {
-    if (audio && audio.played.length > 0) { 
+    if (audio && audio.played) {
         audio.pause();
         audio.currentTime = 0;
     }
@@ -123,6 +115,7 @@ prepare.cards.sort((a, b) => a.id > b.id ? 1 : -1);
 prepare.cards.forEach((item, index) => {
     cardsHtmlContent += `
         <span class="col-sm-3 col-lg-2">
+        
             <div onclick="toggleFlip(${index})" class="card-flip">
                 <div id="card-flip-${index}">
                     <div class="front">
@@ -133,7 +126,7 @@ prepare.cards.forEach((item, index) => {
                     </div>
                     <div class="back">
                         <div class="card">
-                            <img src="./assets/images/${item.index}.jpg" alt="loading..." style="height:120px;width:100%;display:block;">
+                            <img src="./assets/images/${item.index}.jpg" data-holder-rendered=true style="height:120px;width:100%;display:inline;">
                         </div>
                     </div>
                 </div>
@@ -141,4 +134,4 @@ prepare.cards.forEach((item, index) => {
         </span>
     `;
 });
-document.getElementById('cards').innerHTML = cardsHtmlContent; // FIX: added non-null assertion
+document.getElementById('cards').innerHTML = cardsHtmlContent;
