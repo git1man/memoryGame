@@ -7,7 +7,7 @@ prepare.goodAudio = new Audio('./assets/audio/good.mp3');
 prepare.failAudio = new Audio('./assets/audio/fail.mp3');
 prepare.gameOverAudio = new Audio('./assets/audio/game-over.mp3');
 prepare.fullTrack.loop = true;
-const numberOfCards = 20;
+const numberOfCards = 24;
 const tempNumbers = [];
 let cardsHtmlContent = '';
 const getRandomInt = (min, max) => {
@@ -84,7 +84,7 @@ const checkFinish = () => {
         stopAudio(prepare.fullTrack);
         stopAudio(prepare.failAudio);
         stopAudio(prepare.goodAudio);
-        prepare.gameOverAudio?.play();
+        prepare.gameOverAudio.play();
     }
 };
 const stopAudio = (audio) => {

@@ -12,7 +12,7 @@ prepare.failAudio = new Audio('./assets/audio/fail.mp3');
 prepare.gameOverAudio = new Audio('./assets/audio/game-over.mp3');
 prepare.fullTrack.loop = true;
 
-const numberOfCards = 20;
+const numberOfCards = 24;
 const tempNumbers: string[] = [];
 let cardsHtmlContent = '';
 
@@ -94,7 +94,7 @@ const checkFinish = () => {
         stopAudio(prepare.fullTrack);
         stopAudio(prepare.failAudio);
         stopAudio(prepare.goodAudio);
-        prepare.gameOverAudio?.play();
+        prepare.gameOverAudio.play();
     }
 };
 
